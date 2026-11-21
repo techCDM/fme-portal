@@ -149,25 +149,27 @@ button {
   }
 }
 
+
 @page {
-  size:A4;
-  margin:10mm;
+    size: A4 portrait;
+    margin: 0;
 }
 
-body.pdf-export{
-  background:#fff !important;
-  margin:0 !important;
-  padding:0 !important;
+body.pdf-export {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-body.pdf-export .container{
-  width:100% !important;
-  max-width:none !important;
-  margin:0 !important;
-  padding:10mm !important;
-  box-shadow:none !important;
-  border-radius:0 !important;
+body.pdf-export .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
 }
+
 body.pdf-export .footer-actions,
 body.pdf-export .photo-choice,
 body.pdf-export .signature-buttons,
@@ -178,14 +180,16 @@ body.pdf-export .signature-box > div:first-child button,
 body.pdf-export .signature-card > div:first-child button,
 body.pdf-export .top-nav,
 body.pdf-export .modal {
-  display:none !important;
+    display: none !important;
 }
-body.pdf-export .signature-box, 
-body.pdf-export .photo-card, 
-body.pdf-export .signature-card {
-  page-break-inside: avoid;
-  break-inside: avoid;
+
+body.pdf-export .signature-box,
+body.pdf-export .signature-card,
+body.pdf-export .photo-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
 }
+
 </style>
 </head>
 <body>
@@ -540,47 +544,73 @@ function getPDFFileName() {
   return `Pre-Installation(${hospital}_${dateText}).pdf`;
 }
 
-// 아이폰 사파리 안정형 PDF 생성
+
 async function savePDF() {
-  setTodayInspectionDate();
-  const fileName = getPDFFileName();
-  const exportTarget = document.getElementById('pdfContainer');
+    setTodayInspectionDate();
 
-  if (!exportTarget || typeof html2pdf === 'undefined') {
-    alert('PDF 라이브러리를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.');
-    return;
-  }
+    const fileName = getPDFFileName();
+    const exportTarget = document.getElementById('pdfContainer');
 
-  window.scrollTo(0, 0);
-  document.body.classList.add('pdf-export');
+    if (!exportTarget || typeof html2pdf === 'undefined') {
+        alert('PDF 라이브러리를 불러오지 못했습니다.');
+        return;
+    }
 
-  await new Promise(resolve => setTimeout(resolve, 400));
+    window.scrollTo(0, 0);
+    document.body.classList.add('pdf-export');
 
-  const options = {
-    margin: [10, 10, 10, 10],
-    filename: fileName,
-    image: { type: 'jpeg', quality: 0.92 },
-    html2canvas: {
-      scale: 1.5, // 아이폰 메모리 방지
-      width: 720,
-      windowWidth: 720,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-    pagebreak: { mode: ['css', 'legacy'], avoid: ['.signature-box', '.signature-card', '.photo-card', 'tr'] }
-  };
+    await new Promise(resolve => setTimeout(resolve, 400));
 
-  try {
-    await html2pdf().set(options).from(exportTarget).save();
-  } catch (error) {
-    console.error('PDF 오류:', error);
-    alert('PDF 생성 중 오류가 발생했습니다: ' + (error.message || error));
-  } finally {
-    document.body.classList.remove('pdf-export');
-  }
+    const options = {
+        margin: [10, 10, 10, 10],
+        filename: fileName,
+
+        image: {
+            type: 'jpeg',
+            quality: 0.95
+        },
+
+        html2canvas: {
+            scale: 1.5,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            scrollX: 0,
+            scrollY: 0
+        },
+
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            compress: true
+        },
+
+        pagebreak: {
+            mode: ['css', 'legacy'],
+            avoid: [
+                '.signature-box',
+                '.signature-card',
+                '.photo-card'
+            ]
+        }
+    };
+
+    try {
+        await html2pdf()
+            .set(options)
+            .from(exportTarget)
+            .save();
+
+    } catch (error) {
+        console.error('PDF 오류:', error);
+        alert('PDF 생성 중 오류가 발생했습니다: ' + error.message);
+
+    } finally {
+        document.body.classList.remove('pdf-export');
+    }
 }
+
 
 function tempSave() {
   try {
