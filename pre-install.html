@@ -19,9 +19,34 @@ body {
   font-family:Arial,"Malgun Gothic","맑은 고딕",sans-serif; line-height:1.55;
 }
 .container {
-  max-width:720px; margin:0 auto; background:#fff; padding:28px;
+  max-width:900px; margin:0 auto; background:#fff; padding:28px;
   border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,.08);
 }
+  
+.top-nav{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:15px;
+}
+
+.home-btn{
+  display:inline-block;
+  background:#0067a8;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.home-btn:hover{
+  background:#00548a;
+}
+
+.no-print{
+  display:block;
+}
+  
 .header { display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:3px solid var(--fmc-blue); padding-bottom:18px; margin-bottom:22px; }
 .title { text-align:right; }
 .title h1 { margin:0; font-size:27px; color:var(--fmc-dark); }
@@ -118,21 +143,30 @@ button {
   th, td { padding:8px 6px; }
 }
 
-@page { size: A4; margin: 10mm; }
-
-body.pdf-export {
-  background: #fff !important;
-  width: 720px !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
+@media print{
+  .no-print{
+    display:none !important;
+  }
 }
-body.pdf-export .container {
-  box-shadow: none !important;
-  width: 720px !important;
-  max-width: 720px !important;
-  margin: 0 !important;
-  padding: 15px !important;
-  border-radius: 0 !important;
+
+@page {
+  size:A4;
+  margin:10mm;
+}
+
+body.pdf-export{
+  background:#fff !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+body.pdf-export .container{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:10mm !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
 }
 body.pdf-export .footer-actions,
 body.pdf-export .photo-choice,
@@ -142,8 +176,9 @@ body.pdf-export #photoArea > button,
 body.pdf-export input[type="file"],
 body.pdf-export .signature-box > div:first-child button,
 body.pdf-export .signature-card > div:first-child button,
+body.pdf-export .top-nav,
 body.pdf-export .modal {
-  display: none !important;
+  display:none !important;
 }
 body.pdf-export .signature-box, 
 body.pdf-export .photo-card, 
@@ -155,6 +190,9 @@ body.pdf-export .signature-card {
 </head>
 <body>
 <div class="container" id="pdfContainer">
+  <div class="top-nav no-print">
+  <a href="index.html" class="home-btn">🏠 Home</a>
+</div>
   <div class="header">
     <div class="title">
       <h1>Pre-Installation Check List</h1>
