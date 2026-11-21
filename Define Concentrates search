@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!-- saved from url=(0188)file:///C:/Users/DONG-M~1.CHA/AppData/Local/Temp/%7B3480A669-97AC-4F0E-BB1E-53FEC4A29193%7D/%7BA2B3338B-7E28-4889-97D9-86E67D9890A4%7D/%ED%88%AC%EC%84%9D%EC%95%A1%20%EC%A1%B0%ED%9A%8C.HTML -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Define Concentrates - 투석액 조성 조회</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            background-color: #2b333e;
+            color: #ffffff;
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(180deg, #3a4452 0%, #2b333e 100%);
+            border: 2px solid #5a6677;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        /* Header */
+        .header-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .header-tag {
+            color: #00d2ff;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        /* Selector Block */
+        .select-group {
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4a5568;
+        }
+        .select-label {
+            font-size: 13px;
+            color: #cbd5e0;
+            margin-bottom: 6px;
+            display: block;
+            font-weight: 500;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #4a5568;
+            background-color: #1a202c;
+            color: #63b3ed;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Section Styling */
+        .section-header {
+            font-size: 12px;
+            color: #a0aec0;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Box styling matching FMC 5008 Machine UI */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .fmc-box {
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e0 100%);
+            border-radius: 6px;
+            padding: 6px 4px;
+            text-align: center;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.3);
+            border: 1px solid #a0aec0;
+            min-height: 54px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .fmc-label {
+            font-size: 10px;
+            color: #4a5568;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+        .fmc-unit {
+            font-size: 8px;
+            color: #718096;
+            font-weight: normal;
+        }
+        .fmc-value {
+            font-size: 17px;
+            font-weight: 800;
+            color: #0066cc;
+            letter-spacing: -0.5px;
+        }
+
+        /* Search input inside select or fallback hint */
+        .info-note {
+            font-size: 11px;
+            color: #718096;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header-title">
+        Define concentrates <span id="headerTag" class="header-tag"></span>
+    </div>
+
+    <!-- Select Dropdown -->
+    <div class="select-group">
+        <label class="select-label" for="concSelect">Concentrate name (제품명 선택)</label>
+        <select id="concSelect" onchange="renderData()">
+            <option value="">-- 투석액을 선택하세요 --</option>
+            <optgroup label="Norm_bibag Group">
+                <option value="AN_Boryeong">보령_Hemosis AN</option>
+                <option value="AN_JW">중외_헤모트레이트</option>
+                <option value="AN_Daehan">대한_AHD</option>
+                <option value="AN_GC">녹십자_HD Sol-BCA</option>
+            </optgroup>
+            <optgroup label="0.1%bibag Group">
+                <option value="AG_Boryeong">보령_Hemosis AG</option>
+                <option value="AG_JW">중외_헤모비덱스0.1%</option>
+                <option value="AG_Daehan">대한_DHdex0.1%</option>
+                <option value="AG_GC">녹십자_HD Sol-BCGA</option>
+            </optgroup>
+            <optgroup label="K-Bicart 761-Bibag Group">
+                <option value="AGL_Boryeong">보령_Hemosis AGL</option>
+                <option value="AGL_JW">중외_헤모비덱스0.15%</option>
+                <option value="AGL_Daehan">대한_DHdex0.15%</option>
+                <option value="AGL_Gambro">갬브로/녹십자_K-Bicart 761</option>
+            </optgroup>
+            <optgroup label="Fresol Series">
+                <option value="Fresol">Fresol</option>
+                <option value="Fresol_L">Fresol L</option>
+                <option value="Fresol_G">Fresol G</option>
+                <option value="Fresol_LG">Fresol LG</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <!-- Component proportions -->
+    <div class="section-header">Component proportions</div>
+    <div class="grid-3">
+        <div class="fmc-box">
+            <div class="fmc-label">A concentrate<br><span class="fmc-unit">Proport.</span></div>
+            <div class="fmc-value" id="a_prop">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">B concentrate<br><span class="fmc-unit">Proport.</span></div>
+            <div class="fmc-value" id="b_prop">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">Water<br><span class="fmc-unit">Proport.</span></div>
+            <div class="fmc-value" id="water">-</div>
+        </div>
+    </div>
+
+    <!-- Electrolytes -->
+    <div class="section-header">Electrolytes</div>
+    <div class="grid-4" style="margin-bottom: 6px;">
+        <div class="fmc-box">
+            <div class="fmc-label">Na<sup>+</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="na">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">K<sup>+</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="k">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">Ca<sup>++</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="ca">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">Mg<sup>++</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="mg">-</div>
+        </div>
+    </div>
+    <div class="grid-3">
+        <div class="fmc-box">
+            <div class="fmc-label">Cl<sup>-</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="cl">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">HCO<sub>3</sub><sup>-</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="hco3">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">CH<sub>3</sub>COO<sup>-</sup><br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="ch3coo">-</div>
+        </div>
+    </div>
+
+    <!-- Other ingredients -->
+    <div class="section-header">Other ingredients</div>
+    <div class="grid-3">
+        <div class="fmc-box">
+            <div class="fmc-label">Glucose<br><span class="fmc-unit">g/l</span></div>
+            <div class="fmc-value" id="glucose">-</div>
+        </div>
+    </div>
+
+    <!-- Component ingredients -->
+    <div class="section-header">Component ingredients</div>
+    <div class="grid-2">
+        <div class="fmc-box">
+            <div class="fmc-label">Acid(A)<br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="acid_a">-</div>
+        </div>
+        <div class="fmc-box">
+            <div class="fmc-label">Na(B)<br><span class="fmc-unit">mmol/l</span></div>
+            <div class="fmc-value" id="na_b">-</div>
+        </div>
+    </div>
+
+    <div class="info-note">
+        Fresenius Medical Care 장비와 유사한 화면 투석액 조회기입니다.
+    </div>
+</div>
+
+<script>
+    // Data mapping
+    const norm_bibag_data = {
+        tag: "- Norm_bibag",
+        a_prop: "1", b_prop: "1.225", water: "32.775",
+        na: "140", k: "2.50", ca: "1.750", mg: "0.75", cl: "106.50", hco3: "33.0", ch3coo: "8.00",
+        glucose: "0.00", acid_a: "2.00", na_b: "35.0"
+    };
+
+    const bibag_01_data = {
+        tag: "- 0.1%bibag",
+        a_prop: "1", b_prop: "1.225", water: "32.775",
+        na: "145", k: "2.00", ca: "1.500", mg: "0.50", cl: "110.00", hco3: "33.0", ch3coo: "8.00",
+        glucose: "1.00", acid_a: "2.00", na_b: "35.0"
+    };
+
+    const k_bicart_data = {
+        tag: "- K-Bicart 761-Bibag",
+        a_prop: "1", b_prop: "1.225", water: "32.775",
+        na: "138", k: "2.00", ca: "1.250", mg: "0.50", cl: "108.50", hco3: "32.0", ch3coo: "3.00",
+        glucose: "1.00", acid_a: "3.00", na_b: "35.0"
+    };
+
+    const db = {
+        // Norm_bibag 4종
+        "AN_Boryeong": norm_bibag_data,
+        "AN_JW": norm_bibag_data,
+        "AN_Daehan": norm_bibag_data,
+        "AN_GC": norm_bibag_data,
+
+        // 0.1%bibag 4종
+        "AG_Boryeong": bibag_01_data,
+        "AG_JW": bibag_01_data,
+        "AG_Daehan": bibag_01_data,
+        "AG_GC": bibag_01_data,
+
+        // K-Bicart 761-Bibag 4종
+        "AGL_Boryeong": k_bicart_data,
+        "AGL_JW": k_bicart_data,
+        "AGL_Daehan": k_bicart_data,
+        "AGL_Gambro": k_bicart_data,
+
+        // Fresol 계열
+        "Fresol": {
+            tag: "- Fresol",
+            a_prop: "1", b_prop: "1.225", water: "32.780",
+            na: "140", k: "2.00", ca: "1.500", mg: "0.50", cl: "111.00", hco3: "31.0", ch3coo: "4.00",
+            glucose: "0.00", acid_a: "4.00", na_b: "35.0"
+        },
+        "Fresol_L": {
+            tag: "- Fresol L",
+            a_prop: "1", b_prop: "1.225", water: "32.780",
+            na: "140", k: "2.00", ca: "1.300", mg: "0.20", cl: "110.00", hco3: "32.0", ch3coo: "3.00",
+            glucose: "0.00", acid_a: "3.00", na_b: "35.0"
+        },
+        "Fresol_G": {
+            tag: "- Fresol G",
+            a_prop: "1", b_prop: "1.225", water: "32.775",
+            na: "140", k: "2.00", ca: "1.500", mg: "0.50", cl: "110.00", hco3: "32.0", ch3coo: "3.00",
+            glucose: "1.00", acid_a: "3.00", na_b: "35.0"
+        },
+        "Fresol_LG": {
+            tag: "- Fresol LG",
+            a_prop: "1", b_prop: "1.225", water: "32.775",
+            na: "140", k: "2.00", ca: "1.300", mg: "0.50", cl: "110.60", hco3: "32.0", ch3coo: "3.00",
+            glucose: "1.00", acid_a: "3.00", na_b: "35.0"
+        }
+    };
+
+    function renderData() {
+        const key = document.getElementById("concSelect").value;
+        const item = db[key];
+
+        document.getElementById("headerTag").innerText = item ? item.tag : "";
+        
+        const fields = ['a_prop', 'b_prop', 'water', 'na', 'k', 'ca', 'mg', 'cl', 'hco3', 'ch3coo', 'glucose', 'acid_a', 'na_b'];
+        
+        fields.forEach(field => {
+            document.getElementById(field).innerText = item ? item[field] : "-";
+        });
+    }
+</script>
+
+
+</body></html>
