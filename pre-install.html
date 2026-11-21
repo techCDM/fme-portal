@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pre-Installation Check List</title>
+<style>
+:root {
+  --fmc-blue:#0067a8;
+  --fmc-dark:#12354a;
+  --line:#d9e1e7;
+  --soft:#f5f8fa;
+  --warn:#d93025;
+  --text:#1f2933;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; padding:20px; background:#eef2f5; color:var(--text);
+  font-family:Arial,"Malgun Gothic","맑은 고딕",sans-serif; line-height:1.55;
+}
+.container {
+  max-width:720px; margin:0 auto; background:#fff; padding:28px;
+  border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+.header { display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:3px solid var(--fmc-blue); padding-bottom:18px; margin-bottom:22px; }
+.title { text-align:right; }
+.title h1 { margin:0; font-size:27px; color:var(--fmc-dark); }
+.title p { margin:3px 0 0; color:#6b7280; font-size:13px; }
+.info-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px;
+}
+.field { display:flex; flex-direction:column; gap:6px; }
+label { font-weight:700; font-size:14px; }
+input[type=text], input[type=date], textarea {
+  width:100%; border:1px solid #cbd5dc; border-radius:7px; padding:10px 12px;
+  font:inherit; background:#fff; outline:none;
+}
+input:focus, textarea:focus { border-color:var(--fmc-blue); box-shadow:0 0 0 3px rgba(0,103,168,.1); }
+table { width:100%; border-collapse:collapse; table-layout:fixed; }
+th, td { border:1px solid var(--line); padding:10px 9px; vertical-align:top; }
+th { background:#edf4f8; color:#233746; font-size:14px; }
+th.no, td.no { width:60px; text-align:center; }
+th.status, td.status { width:130px; text-align:center; }
+tr.section-row td {
+  background:#e9f2f7; color:#12354a; font-weight:700; padding:9px 10px;
+}
+.item-desc { word-break:keep-all; }
+.status-wrap { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+.check-label { display:inline-flex; align-items:center; gap:4px; cursor:pointer; font-size:13px; white-space:nowrap; }
+.check-label input { width:18px; height:18px; accent-color:var(--fmc-blue); }
+.warning {
+  display:none; margin-top:8px; padding:8px 9px; border-radius:6px;
+  color:var(--warn); background:#fff1f0; border:1px solid #ffc9c5;
+  font-size:12px; font-weight:700; text-align:left;
+}
+.warning.show { display:block; }
+.comments-title { margin:24px 0 8px; font-size:18px; color:var(--fmc-dark); }
+.photo-choice {
+  display:flex; align-items:center; gap:18px; background:#f7fafb;
+  border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin-bottom:12px;
+}
+.radio { display:flex; gap:5px; align-items:center; cursor:pointer; }
+#photoArea { display:none; }
+.photo-card {
+  border:1px dashed #aebbc4; border-radius:9px; padding:14px; margin:10px 0;
+  background:#fbfcfd;
+}
+.photo-row { display:grid; grid-template-columns:220px 1fr; gap:14px; align-items:start; }
+.preview {
+  width:100%; height:180px; border:1px solid #d6dee4; border-radius:7px;
+  display:flex; align-items:center; justify-content:center; overflow:hidden; background:#f2f5f7; color:#87939d;
+}
+.preview img { width:100%; height:100%; object-fit:contain; }
+.photo-actions { margin-top:8px; display:flex; gap:8px; }
+button {
+  border:0; border-radius:7px; padding:10px 14px; cursor:pointer; font:inherit; font-weight:700;
+}
+.btn-primary { background:var(--fmc-blue); color:#fff; }
+.btn-secondary { background:#e8edf1; color:#233746; }
+.btn-success { background:#2e7d32; color:#fff; }
+.btn-danger { background:#fff0ef; color:#c62828; border:1px solid #ffc7c2; }
+.signature-box { border:1px solid var(--line); border-radius:8px; padding:14px; margin-top:22px; background:#fbfcfd; }
+.signature-preview {
+  min-height:130px; border:1px solid #cbd5dc; border-radius:7px; background:#fff;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.signature-preview img { max-width:100%; max-height:180px; }
+.signature-buttons { margin-top:9px; display:flex; gap:8px; }
+.signature-card {
+  border:1px solid #d9e1e7; border-radius:8px; padding:14px; margin-top:12px; background:#fff;
+}
+.footer-actions { display:flex; justify-content:center; gap:10px; margin-top:24px; flex-wrap:wrap; }
+.small { font-size:12px; color:#697780; }
+.modal {
+  display:none; position:fixed; z-index:1000; inset:0; background:rgba(0,0,0,.6);
+  align-items:center; justify-content:center; padding:14px;
+}
+.modal.open { display:flex; }
+.modal-card { width:min(850px,100%); background:#fff; border-radius:12px; padding:16px; }
+.modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.modal-head h2 { margin:0; font-size:19px; }
+#signatureCanvas {
+  width:100%; height:430px; display:block; background:#fff; border:2px solid #aebbc4;
+  border-radius:8px; touch-action:none; cursor:crosshair;
+}
+
+@media(max-width:700px) {
+  body { padding:8px; }
+  .container { padding:14px; border-radius:8px; }
+  .header { flex-direction:column; align-items:flex-start; }
+  .title { text-align:left; }
+  .info-grid { grid-template-columns:1fr; }
+  th.status, td.status { width:105px; }
+  th.no, td.no { width:45px; }
+  .photo-row { grid-template-columns:1fr; }
+  .preview { height:210px; }
+  #signatureCanvas { height:360px; }
+  th, td { padding:8px 6px; }
+}
+
+@page { size: A4; margin: 10mm; }
+
+body.pdf-export {
+  background: #fff !important;
+  width: 720px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+body.pdf-export .container {
+  box-shadow: none !important;
+  width: 720px !important;
+  max-width: 720px !important;
+  margin: 0 !important;
+  padding: 15px !important;
+  border-radius: 0 !important;
+}
+body.pdf-export .footer-actions,
+body.pdf-export .photo-choice,
+body.pdf-export .signature-buttons,
+body.pdf-export .photo-actions,
+body.pdf-export #photoArea > button,
+body.pdf-export input[type="file"],
+body.pdf-export .signature-box > div:first-child button,
+body.pdf-export .signature-card > div:first-child button,
+body.pdf-export .modal {
+  display: none !important;
+}
+body.pdf-export .signature-box, 
+body.pdf-export .photo-card, 
+body.pdf-export .signature-card {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+</style>
+</head>
+<body>
+<div class="container" id="pdfContainer">
+  <div class="header">
+    <div class="title">
+      <h1>Pre-Installation Check List</h1>
+      <p>Dialysis System Installation Site Inspection</p>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="field">
+      <label>Customer/병원명</label>
+      <input id="hospital" type="text" placeholder="병원명 입력">
+    </div>
+    <div class="field">
+      <label>설치 예정일</label>
+      <input id="installDate" type="date">
+    </div>
+    <div class="field">
+      <label>점검일</label>
+      <input id="inspectionDate" type="date" aria-label="점검일">
+    </div>
+    <div class="field">
+      <label>Technician name</label>
+      <input id="technician" type="text" placeholder="Technician name 입력">
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th class="no">No.</th><th>Description</th><th class="status">☑ / N/A</th></tr>
+    </thead>
+    <tbody id="checklistBody"></tbody>
+  </table>
+
+  <h3 class="comments-title"></h3>
+  <div class="photo-choice">
+    <strong>사진을 업로드 하시겠습니까?</strong>
+    <label class="radio"><input type="radio" name="photoYN" value="yes" onchange="togglePhotoArea(true)"> 예</label>
+    <label class="radio"><input type="radio" name="photoYN" value="no" onchange="togglePhotoArea(false)" checked> 아니요</label>
+  </div>
+
+  <div id="photoArea">
+    <div id="photoList"></div>
+    <button type="button" class="btn-secondary" onclick="addPhoto()">＋ 사진 추가</button>
+  </div>
+
+  <div class="signature-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+      <h3 style="margin:0 0 6px;">병원 확인</h3>
+      <button type="button" class="btn-primary" onclick="addSignature()">＋ 서명 추가</button>
+    </div>
+    <div id="signatureList">
+      <div class="signature-card" id="signature-card-1">
+        <div class="field">
+          <label>담당자</label>
+          <input type="text" class="signature-name" placeholder="병원 담당자 성명 입력">
+        </div>
+        <div style="margin-top:12px;">
+          <label>서명 (수기)</label>
+          <div id="signaturePreview-1" class="signature-preview">
+            <span class="small">서명이 아직 없습니다.</span>
+          </div>
+          <div class="signature-buttons">
+            <button type="button" class="btn-primary" onclick="openSignature(1)">서명하기</button>
+            <button type="button" class="btn-danger" onclick="clearSignature(1)">지우기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-actions">
+    <button type="button" class="btn-primary" onclick="savePDF()">PDF로 저장</button>
+    <button type="button" class="btn-success" onclick="tempSave()">임시 저장</button>
+    <button type="button" class="btn-secondary" onclick="loadTempSave()">임시 저장 불러오기</button>
+    <button type="button" class="btn-secondary" onclick="resetForm()">입력 내용 초기화</button>
+  </div>
+</div>
+
+<div id="signatureModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>서명하기</h2>
+      <button type="button" class="btn-secondary" onclick="closeSignature()">닫기</button>
+    </div>
+    <div class="small" style="margin-bottom:8px;">손가락 또는 마우스로 서명해 주세요.</div>
+    <canvas id="signatureCanvas"></canvas>
+    <div class="signature-buttons">
+      <button type="button" class="btn-primary" onclick="saveSignature()">서명 저장</button>
+      <button type="button" class="btn-danger" onclick="clearCanvas()">지우기</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+const checklist = [{"section": true, "no": "1", "desc": "Room inspection"}, {"section": false, "no": "1.1", "desc": "물 튀는 곳은 피할 것, 최대 허용 바닥 경사 5° 이내."}, {"section": false, "no": "1.2", "desc": "천장 , 벽면 , 바닥 : 매끈하고 , 방수가 되며 , 닳지 않고 , 습식 소득이 가능해야 함"}, {"section": false, "no": "1.3", "desc": "바닥이 하중을 충분히 견딜 것 (투석장비 약 100kg+침대 약 50kg+환자 약 150kg=약 300kg)"}, {"section": false, "no": "1.4", "desc": "1회 투석 당 평균 소비 전력 (투석 : 0.68kWh / 열 소독 : 0.80kWh)"}, {"section": false, "no": "1.5", "desc": "환기:최소 창문 환기가 가능해야 함, 투석 스테이션 당 간격 1.6m이상. (장비:1680*520*780)"}, {"section": false, "no": "1.6", "desc": "투석 스테이션당 응급 호출 벨/간호사 호출 벨 (병실당 별도 회선)"}, {"section": false, "no": "1.7", "desc": "대기 안전 조명 (1시간 이상 정전 시)"}, {"section": false, "no": "1.8", "desc": "MRI / MRT 촬영과 같은 영역으로부터의 거리 유지"}, {"section": true, "no": "2", "desc": "Environmental Conditions for Dialysis Systems (Operation)"}, {"section": false, "no": "2.1", "desc": "온도 범위 15°C ~ 30°C(환자에게는 22°C~24°C 권장), 동결 방지를 위한 온도 유지(휴일 포함)"}, {"section": false, "no": "2.2", "desc": "일시적 습도 최대. 95% rel."}, {"section": false, "no": "2.3", "desc": "대기압 700 hPa ~ 1060 hPa"}, {"section": true, "no": "3", "desc": "Electrical Connection"}, {"section": false, "no": "3.1", "desc": "공급전원 : AC220~230V, 50/60Hz, 11A, 정전 < 20ms, 전압 허용 오차 + 10% / -14%"}, {"section": false, "no": "3.2", "desc": "1종 접지, 접지저항<10Ω, 보호 접지 단자(도체 2개 + 보호 접지 도체)가 있는 콘센트 설치"}, {"section": false, "no": "3.3", "desc": "고장 시 위험한 감전으로부터 보호해 주는 누전 차단기 권장"}, {"section": false, "no": "3.4", "desc": "주 전원 및 비상 전원 공급 장치의 과전압/낙뢰 보호를 위한 보호 장치 권장."}, {"section": false, "no": "3.5", "desc": "소켓 및 하나의 회로에 최대 1개 투석 시스템 연결"}, {"section": false, "no": "3.6", "desc": "투석 시스템당 개별 차단기 설치 (권장: 220V~240V의 경우 16A 이상)"}, {"section": false, "no": "3.7", "desc": "추가 연장 케이블이나 여러 개의 플러그/커플링을 사용 금지"}, {"section": false, "no": "3.8", "desc": "일반적으로 (전류) 부하는 전력 시스템의 여러 상에서 가능한 한 균등하게 분산."}, {"section": false, "no": "3.9", "desc": "작동 중인 투석 시스템 근처에서 전자파를 방출하는 기계나 장치(예: 무전기, 휴대용 전화기, 무선 송신기) 사용 금지."}, {"section": false, "no": "3.10", "desc": "부속품 일부가 아니거나 FME에서 출시하지 않은 여타의 다른 장비를 투석 시스템과 연결 금지"}, {"section": true, "no": "4", "desc": "Water Supply"}, {"section": false, "no": "4.1", "desc": "역삼투압 정수장지를 사용해야 하며 ISO 13959 수질 관리 기준을 따를 것"}, {"section": false, "no": "4.2", "desc": "급수압력 : 1.5 ~ 6.0 bar, 급수 온도 : 5°C ~ 30°C (IHR 인 경우 : 85°C ~ 95°C)"}, {"section": false, "no": "4.3", "desc": "급수률 : 1.5 l/min (급수압이 1.5bar 인 경우)"}, {"section": false, "no": "4.4", "desc": "급수 시스템 고정 연결부(예: SMART BOX)에 대한 공급수 라인의 길이는 3m 초과 금지"}, {"section": false, "no": "4.5", "desc": "각 시스템마다 별도의 독립적인 공급수가 필요합니다."}, {"section": true, "no": "5", "desc": "Drain"}, {"section": false, "no": "5.1", "desc": "배수 위치는 바닥에서 0~100cm 사이에 위치하되 Dialyser보다는 낮은 위치에 설치되어야 함"}, {"section": false, "no": "5.2", "desc": "각 시스템마다 별도의 독립적인 자연 배출구가 설치되어야 하며. 배수관 연결 전에 여러 개의 시스템 배수라인을 한데 모으는 것은 허용되지 않음"}, {"section": false, "no": "5.3", "desc": "투석 시스템의 배수관은 길이가 3m 초과 금지."}];
+const warnings = {"5.3": "배수관과 배수 라인이 멀어질 경우 배수 성능 저하 및 누수·사고를 유발할 수 있습니다. 현장 조건을 재확인하고 적절한 위치에 설치해 주세요.", "5.2": "여러 시스템의 배수라인을 하나로 연결하여 사용하는 경우, 장기간 운전 시 배수 흐름이 원활하지 않아 오버플로우가 발생할 가능성이 있습니다. 각 시스템별 독립 배수구가 확보되었는지 확인해 주세요.", "4.5": "각 시스템에 독립적인 공급수를 확보하지 않을 경우 급수 안정성에 영향을 줄 수 있습니다. 시스템별 공급수 연결 상태를 확인해 주세요.", "4.4": "공급수 라인이 3m를 초과하면 급수 성능에 영향을 줄 수 있습니다. 공급수 연결 위치와 라인 길이를 재확인해 주세요.", "3.7": "연장 케이블이나 여러 개의 플러그·커플링 사용은 전원 품질 및 안전에 영향을 줄 수 있습니다. 설치 환경을 재확인해 주세요."};
+
+function buildChecklist() {
+  const body = document.getElementById('checklistBody');
+  if (!body) return;
+  body.innerHTML = '';
+  checklist.forEach((item, idx) => {
+    if (item.section) {
+      const tr=document.createElement('tr');
+      tr.className='section-row';
+      tr.innerHTML=`<td colspan="3">${item.no}. ${item.desc}</td>`;
+      body.appendChild(tr);
+      return;
+    }
+    const tr=document.createElement('tr');
+    tr.dataset.no=item.no;
+    const warning=warnings[item.no] || '';
+    tr.innerHTML=`
+      <td class="no">${item.no}</td>
+      <td class="item-desc">
+        ${item.desc}
+        <div class="warning" id="warning-${idx}">${warning}</div>
+      </td>
+      <td class="status">
+        <div class="status-wrap">
+          <label class="check-label"><input type="checkbox" class="ok-check" data-no="${item.no}"> ☑</label>
+          <label class="check-label"><input type="checkbox" class="na-check" data-no="${item.no}" data-warning-id="warning-${idx}"> N/A</label>
+        </div>
+      </td>`;
+    body.appendChild(tr);
+  });
+  document.querySelectorAll('.ok-check').forEach(cb => cb.addEventListener('change', function(){
+    if(this.checked) {
+      const na=this.closest('tr').querySelector('.na-check');
+      na.checked=false;
+      hideWarning(na);
+    }
+  }));
+  document.querySelectorAll('.na-check').forEach(cb => cb.addEventListener('change', function(){
+    const ok=this.closest('tr').querySelector('.ok-check');
+    if(this.checked) {
+      ok.checked=false;
+      const w=document.getElementById(this.dataset.warningId);
+      if(w && w.textContent.trim()) w.classList.add('show');
+    } else hideWarning(this);
+  }));
+}
+
+function hideWarning(cb) {
+  const w=document.getElementById(cb.dataset.warningId);
+  if(w) w.classList.remove('show');
+}
+
+let photoCount=0;
+function togglePhotoArea(show) {
+  document.getElementById('photoArea').style.display=show?'block':'none';
+  if(show && photoCount===0) addPhoto();
+}
+
+function addPhoto() {
+  photoCount++;
+  const id=photoCount;
+  const card=document.createElement('div');
+  card.className='photo-card';
+  card.id='photo-card-'+id;
+  card.innerHTML=`
+    <div class="photo-row">
+      <div>
+        <div class="preview" id="preview-${id}">사진 미리보기</div>
+        <input type="file" id="photo-${id}" accept="image/*" style="margin-top:8px;width:100%;" onchange="previewPhoto(${id}, this)">
+      </div>
+      <div>
+        <label>사진 설명</label>
+        <textarea id="photo-desc-${id}" rows="7" placeholder="해당 사진의 위치, 문제점 또는 확인 내용을 입력하세요."></textarea>
+      </div>
+    </div>
+    <div class="photo-actions">
+      <button type="button" class="btn-danger" onclick="removePhoto(${id})">사진 삭제</button>
+    </div>`;
+  document.getElementById('photoList').appendChild(card);
+}
+
+function previewPhoto(id,input) {
+  const preview=document.getElementById('preview-'+id);
+  const file=input.files && input.files[0];
+  if(!file) { preview.textContent='사진 미리보기'; return; }
+  const reader=new FileReader();
+  reader.onload=e=>{ preview.innerHTML=`<img src="${e.target.result}" alt="업로드 사진">`; };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(id) {
+  const el=document.getElementById('photo-card-'+id);
+  if(el) el.remove();
+}
+
+let canvas, ctx, drawing=false, lastX=0, lastY=0;
+let signatureCount=1;
+let activeSignatureId=1;
+
+function setupCanvas() {
+  canvas=document.getElementById('signatureCanvas');
+  if(!canvas) return;
+  ctx=canvas.getContext('2d');
+  resizeCanvas();
+  
+  // 아이폰 사파리 터치 이벤트 완벽 지원
+  canvas.addEventListener('pointerdown', handlePointer, {passive: false});
+  canvas.addEventListener('pointermove', handlePointer, {passive: false});
+  canvas.addEventListener('pointerup', handlePointer, {passive: false});
+  canvas.addEventListener('pointercancel', handlePointer, {passive: false});
+}
+
+function resizeCanvas() {
+  if(!canvas) return;
+  const rect=canvas.getBoundingClientRect();
+  if (rect.width === 0) return;
+  const ratio=window.devicePixelRatio || 1;
+  const old=canvas.toDataURL();
+  canvas.width=Math.round(rect.width*ratio);
+  canvas.height=Math.round(rect.height*ratio);
+  ctx=canvas.getContext('2d');
+  ctx.scale(ratio,ratio);
+  ctx.lineWidth=2.5;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.strokeStyle='#111';
+  if(old && old!=='data:,') {
+    const img=new Image();
+    img.onload=()=>ctx.drawImage(img,0,0,rect.width,rect.height);
+    img.src=old;
+  }
+}
+
+function point(e) {
+  const r=canvas.getBoundingClientRect();
+  return {x:e.clientX-r.left,y:e.clientY-r.top};
+}
+
+function handlePointer(e) {
+  e.preventDefault(); // 아이폰 스크롤 방지 및 서명 인식 개선
+  if(e.type==='pointerdown') {
+    drawing=true;
+    if(canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
+    const p=point(e);
+    lastX=p.x; lastY=p.y;
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(lastX+0.1,lastY+0.1);
+    ctx.stroke();
+  } else if(e.type==='pointermove' && drawing) {
+    const p=point(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+    lastX=p.x; lastY=p.y;
+  } else if(['pointerup','pointercancel'].includes(e.type)) {
+    drawing=false;
+  }
+}
+
+function addSignature() {
+  signatureCount++;
+  const id=signatureCount;
+  const card=document.createElement('div');
+  card.className='signature-card';
+  card.id='signature-card-'+id;
+  card.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <strong>추가 확인자 ${id-1}</strong>
+      <button type="button" class="btn-danger" onclick="removeSignature(${id})">서명 삭제</button>
+    </div>
+    <div class="field" style="margin-top:10px;">
+      <label>담당자</label>
+      <input type="text" class="signature-name" placeholder="확인자 성명 입력">
+    </div>
+    <div style="margin-top:12px;">
+      <label>서명 (수기)</label>
+      <div id="signaturePreview-${id}" class="signature-preview">
+        <span class="small">서명이 아직 없습니다.</span>
+      </div>
+      <div class="signature-buttons">
+        <button type="button" class="btn-primary" onclick="openSignature(${id})">서명하기</button>
+        <button type="button" class="btn-danger" onclick="clearSignature(${id})">지우기</button>
+      </div>
+    </div>`;
+  document.getElementById('signatureList').appendChild(card);
+}
+
+function removeSignature(id) {
+  const el=document.getElementById('signature-card-'+id);
+  if(el) el.remove();
+  if(activeSignatureId===id) {
+    activeSignatureId=1;
+    clearCanvas();
+  }
+}
+
+function openSignature(id) {
+  activeSignatureId=id;
+  document.getElementById('signatureModal').classList.add('open');
+  clearCanvas();
+  setTimeout(()=>{ resizeCanvas(); }, 100);
+}
+
+function closeSignature() {
+  document.getElementById('signatureModal').classList.remove('open');
+}
+
+function clearCanvas() {
+  if(!canvas || !ctx) return;
+  const r=canvas.getBoundingClientRect();
+  ctx.clearRect(0,0,r.width,r.height);
+}
+
+function saveSignature() {
+  const data=canvas.toDataURL('image/png');
+  const preview=document.getElementById('signaturePreview-'+activeSignatureId);
+  if(preview) {
+    preview.innerHTML=`<img src="${data}" alt="병원 확인 서명">`;
+  }
+  closeSignature();
+}
+
+function clearSignature(id) {
+  const preview=document.getElementById('signaturePreview-'+id);
+  if(preview) preview.innerHTML='<span class="small">서명이 아직 없습니다.</span>';
+  if(activeSignatureId===id) clearCanvas();
+}
+
+function setTodayInspectionDate() {
+  const input = document.getElementById('inspectionDate');
+  if (!input || input.value) return;
+  const now = new Date();
+  input.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function sanitizeFileName(value) {
+  return String(value || '').trim().replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g, ' ');
+}
+
+function getPDFFileName() {
+  const hospital = sanitizeFileName(document.getElementById('hospital').value) || '병원명';
+  const inspectionDate = document.getElementById('inspectionDate').value;
+  const now = new Date();
+  const dateText = inspectionDate || `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  return `Pre-Installation(${hospital}_${dateText}).pdf`;
+}
+
+// 아이폰 사파리 안정형 PDF 생성
+async function savePDF() {
+  setTodayInspectionDate();
+  const fileName = getPDFFileName();
+  const exportTarget = document.getElementById('pdfContainer');
+
+  if (!exportTarget || typeof html2pdf === 'undefined') {
+    alert('PDF 라이브러리를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.');
+    return;
+  }
+
+  window.scrollTo(0, 0);
+  document.body.classList.add('pdf-export');
+
+  await new Promise(resolve => setTimeout(resolve, 400));
+
+  const options = {
+    margin: [10, 10, 10, 10],
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.92 },
+    html2canvas: {
+      scale: 1.5, // 아이폰 메모리 방지
+      width: 720,
+      windowWidth: 720,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+    pagebreak: { mode: ['css', 'legacy'], avoid: ['.signature-box', '.signature-card', '.photo-card', 'tr'] }
+  };
+
+  try {
+    await html2pdf().set(options).from(exportTarget).save();
+  } catch (error) {
+    console.error('PDF 오류:', error);
+    alert('PDF 생성 중 오류가 발생했습니다: ' + (error.message || error));
+  } finally {
+    document.body.classList.remove('pdf-export');
+  }
+}
+
+function tempSave() {
+  try {
+    const data = {
+      hospital: document.getElementById('hospital').value,
+      installDate: document.getElementById('installDate').value,
+      inspectionDate: document.getElementById('inspectionDate').value,
+      technician: document.getElementById('technician').value,
+      checks: {},
+      photoYN: document.querySelector('input[name=photoYN]:checked').value,
+      photos: [],
+      signatures: []
+    };
+
+    document.querySelectorAll('#checklistBody tr').forEach(tr => {
+      const no = tr.dataset.no;
+      if (no) {
+        data.checks[no] = {
+          ok: tr.querySelector('.ok-check').checked,
+          na: tr.querySelector('.na-check').checked
+        };
+      }
+    });
+
+    document.querySelectorAll('.photo-card').forEach(card => {
+      const img = card.querySelector('.preview img');
+      data.photos.push({
+        src: img ? img.src : '',
+        desc: card.querySelector('textarea').value
+      });
+    });
+
+    document.querySelectorAll('.signature-card').forEach(card => {
+      const img = card.querySelector('.signature-preview img');
+      data.signatures.push({
+        name: card.querySelector('.signature-name').value,
+        src: img ? img.src : ''
+      });
+    });
+
+    localStorage.setItem('pre_install_checklist_temp', JSON.stringify(data));
+    alert('임시 저장이 완료되었습니다.');
+  } catch (e) {
+    alert('임시 저장 중 오류가 발생했습니다.');
+  }
+}
+
+function loadTempSave() {
+  const savedData = localStorage.getItem('pre_install_checklist_temp');
+  if (!savedData) {
+    alert('저장된 임시 데이터가 없습니다.');
+    return;
+  }
+  if (!confirm('임시 저장된 내용을 불러오시겠습니까?')) return;
+
+  try {
+    const data = JSON.parse(savedData);
+    document.getElementById('hospital').value = data.hospital || '';
+    document.getElementById('installDate').value = data.installDate || '';
+    document.getElementById('inspectionDate').value = data.inspectionDate || '';
+    document.getElementById('technician').value = data.technician || '';
+
+    if (data.checks) {
+      document.querySelectorAll('#checklistBody tr').forEach(tr => {
+        const no = tr.dataset.no;
+        if (no && data.checks[no]) {
+          tr.querySelector('.ok-check').checked = data.checks[no].ok;
+          const naCb = tr.querySelector('.na-check');
+          naCb.checked = data.checks[no].na;
+          const w = document.getElementById(naCb.dataset.warningId);
+          if (data.checks[no].na && w) w.classList.add('show');
+        }
+      });
+    }
+    alert('불러오기가 완료되었습니다.');
+  } catch (e) {
+    alert('데이터를 불러오는 중 오류가 발생했습니다.');
+  }
+}
+
+function resetForm() {
+  if(!confirm('모두 초기화하시겠습니까?')) return;
+  document.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el=>el.value='');
+  document.querySelectorAll('input[type=checkbox]').forEach(el=>el.checked=false);
+  document.querySelector('input[name=photoYN][value=no]').checked=true;
+  document.getElementById('photoArea').style.display='none';
+  document.getElementById('photoList').innerHTML='';
+  photoCount=0;
+  setTodayInspectionDate();
+}
+
+// DOM이 완전히 로드된 후 안전하게 실행
+document.addEventListener('DOMContentLoaded', () => {
+  buildChecklist();
+  setTodayInspectionDate();
+  setTimeout(setupCanvas, 200);
+});
+
+window.addEventListener('resize', () => {
+  if(document.getElementById('signatureModal').classList.contains('open')) {
+    setTimeout(resizeCanvas, 100);
+  }
+});
+</script>
+</body>
+</html>
