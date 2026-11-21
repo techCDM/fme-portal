@@ -151,54 +151,76 @@ button {
 
 
 
-/* A4 PDF 출력 전용 설정 */
+
+/* PDF 출력 기본 설정 */
 @page {
     size: A4 portrait;
     margin: 10mm;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body.pdf-export {
-    width: 210mm !important;
-    min-width: 210mm !important;
+    width: auto !important;
+    min-width: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
-    background: #ffffff !important;
+    background: #fff !important;
     overflow: visible !important;
 }
 
 body.pdf-export .container {
-    width: 190mm !important;
-    min-width: 190mm !important;
+    width: 100% !important;
+    min-width: 0 !important;
     max-width: none !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
-    box-sizing: border-box !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+    overflow: visible !important;
 }
 
-/* 표 너비 강제 확보 */
+/* 입력란 너비 보정 */
+body.pdf-export .info-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+}
+
+body.pdf-export .field {
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+body.pdf-export input,
+body.pdf-export textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+/* 표 너비 보정 */
 body.pdf-export table {
     width: 100% !important;
-    min-width: 100% !important;
+    max-width: 100% !important;
     table-layout: fixed !important;
     border-collapse: collapse !important;
 }
 
 body.pdf-export th,
 body.pdf-export td {
+    overflow-wrap: break-word;
     box-sizing: border-box !important;
-    overflow: visible !important;
 }
 
-/* 항목 설명 영역 */
-body.pdf-export td.item-desc {
+body.pdf-export .item-desc {
     white-space: normal !important;
     word-break: keep-all !important;
-    overflow-wrap: break-word !important;
 }
 
-/* 인쇄 시 불필요한 버튼 제거 */
+/* PDF에서 숨길 요소 */
 body.pdf-export .footer-actions,
 body.pdf-export .photo-choice,
 body.pdf-export .signature-buttons,
@@ -212,13 +234,14 @@ body.pdf-export .modal {
     display: none !important;
 }
 
-/* 서명과 사진 영역은 중간 분할 방지 */
+/* 페이지 분할 방지 */
 body.pdf-export .signature-box,
 body.pdf-export .signature-card,
 body.pdf-export .photo-card {
     break-inside: avoid;
     page-break-inside: avoid;
 }
+
 
 
 </style>
@@ -577,6 +600,7 @@ function getPDFFileName() {
 
 
 
+
 async function savePDF() {
     setTodayInspectionDate();
 
@@ -584,11 +608,12 @@ async function savePDF() {
     const exportTarget = document.getElementById('pdfContainer');
 
     if (!exportTarget || typeof html2pdf === 'undefined') {
-        alert('PDF 라이브러리를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.');
+        alert('PDF 라이브러리를 불러오지 못했습니다.');
         return;
     }
 
     window.scrollTo(0, 0);
+
     document.body.classList.add('pdf-export');
 
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -605,19 +630,11 @@ async function savePDF() {
 
         html2canvas: {
             scale: 1.5,
-
-            /* A4 전체 너비 약 794px */
-            windowWidth: 794,
-
-            /* 좌우 여백을 제외한 출력 너비 약 718px */
-            width: 718,
-
-            scrollX: 0,
-            scrollY: 0,
-
             useCORS: true,
             backgroundColor: '#ffffff',
             logging: false,
+            scrollX: 0,
+            scrollY: 0,
 
             onclone: function(clonedDoc) {
                 const clonedBody = clonedDoc.body;
@@ -626,16 +643,16 @@ async function savePDF() {
 
                 clonedBody.classList.add('pdf-export');
 
-                clonedBody.style.width = '794px';
-                clonedBody.style.minWidth = '794px';
+                clonedBody.style.width = 'auto';
+                clonedBody.style.minWidth = '0';
                 clonedBody.style.margin = '0';
                 clonedBody.style.padding = '0';
 
                 if (clonedContainer) {
-                    clonedContainer.style.width = '718px';
-                    clonedContainer.style.minWidth = '718px';
+                    clonedContainer.style.width = '100%';
                     clonedContainer.style.maxWidth = 'none';
-                    clonedContainer.style.margin = '0 auto';
+                    clonedContainer.style.minWidth = '0';
+                    clonedContainer.style.margin = '0';
                     clonedContainer.style.padding = '0';
                     clonedContainer.style.boxSizing = 'border-box';
                 }
@@ -677,6 +694,7 @@ async function savePDF() {
         document.body.classList.remove('pdf-export');
     }
 }
+
 
 
 
