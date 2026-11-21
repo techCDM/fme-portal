@@ -150,26 +150,55 @@ button {
 }
 
 
+
+/* A4 PDF 출력 전용 설정 */
 @page {
     size: A4 portrait;
-    margin: 0;
+    margin: 10mm;
 }
 
 body.pdf-export {
-    background: #fff !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
 }
 
 body.pdf-export .container {
-    width: 100% !important;
+    width: 190mm !important;
+    min-width: 190mm !important;
     max-width: none !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
+    box-sizing: border-box !important;
     box-shadow: none !important;
     border-radius: 0 !important;
 }
 
+/* 표 너비 강제 확보 */
+body.pdf-export table {
+    width: 100% !important;
+    min-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+}
+
+body.pdf-export th,
+body.pdf-export td {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+/* 항목 설명 영역 */
+body.pdf-export td.item-desc {
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+}
+
+/* 인쇄 시 불필요한 버튼 제거 */
 body.pdf-export .footer-actions,
 body.pdf-export .photo-choice,
 body.pdf-export .signature-buttons,
@@ -183,12 +212,14 @@ body.pdf-export .modal {
     display: none !important;
 }
 
+/* 서명과 사진 영역은 중간 분할 방지 */
 body.pdf-export .signature-box,
 body.pdf-export .signature-card,
 body.pdf-export .photo-card {
     break-inside: avoid;
     page-break-inside: avoid;
 }
+
 
 </style>
 </head>
@@ -545,6 +576,7 @@ function getPDFFileName() {
 }
 
 
+
 async function savePDF() {
     setTodayInspectionDate();
 
@@ -552,17 +584,18 @@ async function savePDF() {
     const exportTarget = document.getElementById('pdfContainer');
 
     if (!exportTarget || typeof html2pdf === 'undefined') {
-        alert('PDF 라이브러리를 불러오지 못했습니다.');
+        alert('PDF 라이브러리를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.');
         return;
     }
 
     window.scrollTo(0, 0);
     document.body.classList.add('pdf-export');
 
-    await new Promise(resolve => setTimeout(resolve, 400));
+    await new Promise(resolve => setTimeout(resolve, 300));
 
     const options = {
         margin: [10, 10, 10, 10],
+
         filename: fileName,
 
         image: {
@@ -572,11 +605,41 @@ async function savePDF() {
 
         html2canvas: {
             scale: 1.5,
+
+            /* A4 전체 너비 약 794px */
+            windowWidth: 794,
+
+            /* 좌우 여백을 제외한 출력 너비 약 718px */
+            width: 718,
+
+            scrollX: 0,
+            scrollY: 0,
+
             useCORS: true,
             backgroundColor: '#ffffff',
             logging: false,
-            scrollX: 0,
-            scrollY: 0
+
+            onclone: function(clonedDoc) {
+                const clonedBody = clonedDoc.body;
+                const clonedContainer =
+                    clonedDoc.getElementById('pdfContainer');
+
+                clonedBody.classList.add('pdf-export');
+
+                clonedBody.style.width = '794px';
+                clonedBody.style.minWidth = '794px';
+                clonedBody.style.margin = '0';
+                clonedBody.style.padding = '0';
+
+                if (clonedContainer) {
+                    clonedContainer.style.width = '718px';
+                    clonedContainer.style.minWidth = '718px';
+                    clonedContainer.style.maxWidth = 'none';
+                    clonedContainer.style.margin = '0 auto';
+                    clonedContainer.style.padding = '0';
+                    clonedContainer.style.boxSizing = 'border-box';
+                }
+            }
         },
 
         jsPDF: {
@@ -604,12 +667,17 @@ async function savePDF() {
 
     } catch (error) {
         console.error('PDF 오류:', error);
-        alert('PDF 생성 중 오류가 발생했습니다: ' + error.message);
+
+        alert(
+            'PDF 생성 중 오류가 발생했습니다: ' +
+            (error.message || error)
+        );
 
     } finally {
         document.body.classList.remove('pdf-export');
     }
 }
+
 
 
 function tempSave() {
