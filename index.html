@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="manifest" href="/fme-portal/manifest.json">
+
+<meta name="theme-color" content="#2563eb">
+
+<meta name="apple-mobile-web-app-capable"
+      content="yes">
+
+<meta name="apple-mobile-web-app-title"
+      content="FME Portal">
+
+<link rel="apple-touch-icon"
+      href="/fme-portal/icon-512.png">
+    
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FME Portal</title>
@@ -69,6 +82,12 @@ body{
     </a>
 
 </div>
+    
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/fme-portal/sw.js');
+}
+</script>
 
 </body>
 </html>
