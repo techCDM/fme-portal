@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>인공신장실(AK) 전기설비 협조문</title>
 <style>
-.cooperation-section{
+/* .cooperation-section{
     display:none;
-}
+} */
 
 .cooperation-btn-wrap{
     text-align:center;
     margin:15px 0;
 }
 
-.cooperation-btn-wrap button{
+.cooperation-btn-wrap button{X
     background:#2f6f72;
     color:white;
     padding:12px 24px;
@@ -210,7 +210,7 @@ ul{margin:5px 0;padding-left:21px}li{margin:5px 0}
     </button>
 </div>
 
-<section class="card cooperation-section" id="cooperationSection">
+<section class="card cooperation-section" id="cooperationSection" hidden>
   
   <h2>7. 협조 확인</h2>
  <p>상기 전기설비 협조사항을 확인하였으며, 실제 시공 전 현장조건 및 전기설계 기준을 검토하겠습니다.</p>
@@ -434,20 +434,21 @@ document.getElementById("toggleCooperationBtn").addEventListener("click", () => 
     const section = document.getElementById("cooperationSection");
     const btn = document.getElementById("toggleCooperationBtn");
 
-    if(section.style.display === "block"){
+    if(section.hidden){
 
-        section.style.display = "none";
-        btn.textContent = "7. 협조 확인 작성";
-
-    }else{
-
-        section.style.display = "block";
+        section.hidden = false;
         btn.textContent = "협조 확인 숨기기";
 
         section.scrollIntoView({
             behavior:"smooth",
             block:"start"
         });
+
+    }else{
+
+        section.hidden = true;
+        btn.textContent = "7. 협조 확인 작성";
+
     }
 
 });
