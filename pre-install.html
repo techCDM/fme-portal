@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="manifest" href="/fme-portal/manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0">
 <title>Pre-Installation Check List</title>
@@ -803,6 +804,10 @@ window.addEventListener('resize', () => {
     setTimeout(resizeCanvas, 100);
   }
 });
+</script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/fme-portal/sw.js');
+}
 </script>
 </body>
 </html>
