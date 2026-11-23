@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인공신장실(AK) 전기설비 협조문</title>
+<style>
+.cooperation-section{
+    display:none;
+}
+
+.cooperation-btn-wrap{
+    text-align:center;
+    margin:15px 0;
+}
+
+.cooperation-btn-wrap button{
+    background:#2f6f72;
+    color:white;
+    padding:12px 24px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+}
+.cooperation-btn-wrap button:hover{
+    background:#25595c;
+}
+*{box-sizing:border-box}
+:root{--teal:#2f6f72;--dark:#234f52;--line:#d8e0e1;--muted:#607d80}
+body{margin:0;background:#f3f6f7;color:#263238;font-family:"Malgun Gothic","Noto Sans KR",Arial,sans-serif;line-height:1.6}
+.container{max-width:1000px;margin:0 auto;padding:28px 20px 48px}
+.header,.card{background:#fff;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.06);margin-bottom:16px}
+.header{padding:24px 28px;border-top:5px solid var(--teal);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{margin:0;color:var(--dark);font-size:26px}.subtitle{margin:4px 0 0;color:var(--muted);font-size:14px}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap}
+.card{padding:22px 25px}
+h2{font-size:19px;color:var(--dark);margin:0 0 14px;border-left:5px solid var(--teal);padding-left:10px}
+h3{font-size:15px;color:var(--dark);margin:18px 0 8px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.meta label{font-weight:700}.meta input{width:100%;border:0;border-bottom:1px solid #9eacad;padding:7px 3px;font:inherit;background:transparent}
+/* date input에 내장된 카운트/달력 아이콘 및 스틸 스타일 보정 */
+input[type="date"].meta-input{
+ border:0;
+ border-bottom:1px solid #9eacad;
+ border-radius:0;
+ padding:6px 3px;
+ font-family:inherit;
+ color:#263238;
+ background:transparent;
+ -webkit-appearance:none;
+}
+input[type="date"].meta-input::-webkit-calendar-picker-indicator{
+ cursor:pointer;
+ opacity:0.7;
+}
+input[type="date"].meta-input::-webkit-calendar-picker-indicator:hover{
+ opacity:1;
+}
+.input-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+input[type=number]{width:130px;padding:10px;border:1px solid #b8c6c8;border-radius:7px;font-size:16px}
+button{border:0;border-radius:7px;padding:10px 16px;background:var(--teal);color:#fff;font-weight:700;cursor:pointer;font-size:14px}
+button:hover{filter:brightness(.92)}.btn-pdf{background:#b83a3a}.btn-light{background:#53666a}.btn-sign{background:#1976d2;color:#fff}.btn-danger{background:#c62828;color:#fff}
+.assumption,.notice{padding:12px 15px;border-radius:6px;font-size:13px;margin-top:13px}
+.assumption{background:#f1f7f7;border-left:4px solid #5f9294}
+.notice{background:#fff8ed;border-left:4px solid #e2a72e}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+th,td{border:1px solid var(--line);padding:9px 8px;text-align:center;vertical-align:middle}
+th{background:#edf3f3;color:#315c5f}td:first-child{text-align:center;font-weight:700}
+.result-table td:first-child{text-align:left}
+.result-table td:last-child{font-weight:700}
+.highlight{background:#fff3d6;color:#6d4b00;font-weight:800}
+.highlight strong{font-size:20px;display:block}
+.small{font-size:12px;color:#647477}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ul{margin:5px 0;padding-left:21px}li{margin:5px 0}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}
+.checklist label{font-weight:400;display:flex;gap:8px;align-items:flex-start}
+.sign-table td{height:38px}
+.footer-note{font-size:12px;color:#5f6f72;margin-top:14px}
+.red-emphasis{color:#c62828;font-weight:800}
+.signature-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.signature-canvas{width:190px;height:54px;border:1px solid #b8c6c8;border-radius:4px;background:#fff;touch-action:none;cursor:crosshair}
+.signature-actions{display:flex;gap:5px}
+.signature-actions button{padding:4px 8px;font-size:11px}
+.vendor-input{width:100%;min-width:100px;border:0;border-bottom:1px solid #aab7b9;padding:6px;font:inherit;background:transparent}
+.vendor-table td{padding:6px 5px}
+.vendor-actions-row{display:flex;gap:8px;margin-top:10px}
+
+/* 모달 팝업 스타일 */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:15px}
+.modal-overlay.active{display:flex}
+.modal-card{background:#fff;width:100%;max-width:400px;border-radius:12px;padding:20px;box-shadow:0 10px 25px rgba(0,0,0,0.2);display:flex;flex-direction:column;gap:12px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:8px}
+.modal-header h3{margin:0;font-size:17px;color:var(--dark)}
+.modal-canvas-wrap{width:100%;height:180px;border:1px dashed #78909c;border-radius:8px;background:#fafafa;position:relative}
+.modal-canvas{width:100%;height:100%;touch-action:none;cursor:crosshair}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px}
+
+@media(max-width:650px){.container{padding:14px 10px 28px}.header,.card{padding:17px 15px}h1{font-size:22px}.meta,.two-col,.checklist{grid-template-columns:1fr}table{font-size:11px}th,td{padding:7px 4px}}
+@media print{
+  .cooperation-section{
+      display:block !important;
+  }
+
+  .no-print{
+      display:none !important;
+  }  
+ @page{size:A4;margin:10mm}
+ body{background:#fff;zoom:55%}
+ .container{max-width:none;padding:0}
+ .header,.card{box-shadow:none;border:1px solid #ddd;border-radius:0;margin-bottom:10px;padding:15px 18px;break-inside:avoid}
+ button,.header-actions,.vendor-actions-row,.chk-col{display:none!important}
+ input[type=number]{border:0;background:transparent;font-weight:bold}
+ input.meta-input{border:0}
+ input[type="date"].meta-input::-webkit-calendar-picker-indicator{display:none}
+ table{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="header">
+ <div><h1>인공신장실(AK) 전기설비 협조문</h1><p class="subtitle">의료장비 설치를 위한 전원 및 배전반 구성 참고자료</p></div>
+ <div class="header-actions">
+  <button type="button" class="btn-pdf" onclick="handlePrint()">🖨 인쇄 / PDF 저장</button>
+ </div>
+</header>
+
+<section class="card">
+ <h2>1. 현장 및 장비 정보</h2>
+ <div class="meta">
+  <label>현장명<input class="meta-input" type="text" id="siteName" placeholder="현장명 입력"></label>
+  <label>장비명<input class="meta-input" type="text" id="deviceName" placeholder="장비명 입력"></label>
+  <label>작성일<input class="meta-input" type="date" id="docDate"></label>
+  <label>담당자<input class="meta-input" type="text" id="managerName" placeholder="담당자 입력"></label>
+ </div>
+</section>
+
+<section class="card">
+ <h2>2. 의료장소 그룹 분류 및 특징</h2>
+ <p>인공신장실(인공투석실)은 의료용 전기기기의 장착부 사용 특성에 따라 일반적으로 <b>의료장소 그룹 1</b>로 분류됩니다. 아래 표는 그룹별 장소 예시와 장착부 적용 형태를 정리한 참고자료입니다.</p>
+ <table><thead><tr><th>그룹</th><th>해당 장소 예시</th><th>장착부 적용 형태</th></tr></thead><tbody>
+ <tr><td><b>그룹 0</b></td><td>일반병실, 진찰실, 검사실, 처치실, 재활치료실 등</td><td>장착부를 사용하지 않는 의료장소</td></tr>
+ <tr><td><b>그룹 1</b></td><td>분만실, MRI실, X선 검사실, 회복실, 구급처치실, 인공투석실, 내시경실 등</td><td>장착부를 환자 신체 외부 또는 심장 부위를 제외한 신체 내부에 삽입</td></tr>
+ <tr><td><b>그룹 2</b></td><td>관상동맥환자 처치실(심장카테터실), 심혈관조영실, 중환자실, 마취실, 수술실, 회복실 등</td><td>장착부를 환자의 심장 부위에 삽입 또는 접촉</td></tr>
+ </tbody></table>
+ <p class="small">※ 실제 그룹 분류는 의료행위 및 장비의 사용 형태를 기준으로 현장 전기설계자가 확인합니다.</p>
+</section>
+
+<section class="card">
+ <h2>3. 장비 수량 및 부하 계산</h2>
+ <div class="input-row"><label for="machineCount">장비 수량</label><input type="number" id="machineCount" value="20" min="0" max="999" placeholder="수량 입력"><b>대</b><button type="button" onclick="calculate()">계산하기</button></div>
+ <div class="assumption"><b>계산 조건</b><br>
+ 전원 방식: 3상 4선식 380/220V · 의료장비: 단상 220V · 장비 1대당 최대 입력전류: 11A<br>
+ 장비는 각 상에 가능한 균등하게 분배하며, 일반전기 부하는 계산에서 제외합니다. 결과는 전기설비 계획을 위한 참고값입니다.</div>
+ <table class="result-table"><thead><tr><th>항목</th><th>계산식</th><th>결과</th></tr></thead><tbody id="resultBody"></tbody></table>
+ <div class="notice"><b>차단기 계산 주의</b><br>표시된 차단기 정격은 최종 확정값이 아닌 참고값입니다. 실제 장비 정격·운전전류·연속부하·기동전류·전선 허용전류·배선 방식·설치환경·전압강하·차단용량·보호협조 및 상간 부하 불균형을 종합하여 현장 전기설계자가 최종 선정해야 합니다.</div>
+</section>
+
+<section class="card">
+ <h2>4. 배전반 회로표 예시</h2>
+ <p class="small">아래는 장비별 독립 회로 및 상 분배를 나타낸 예시입니다. 실제 회로 구성과 상 배분은 현장 전기설계에 따라 결정합니다.</p>
+ <div style="overflow-x:auto"><table><thead><tr><th>장비 번호</th><th>상</th><th>전원</th><th>차단기 참고</th><th>콘센트 번호</th><th>배전반 개별차단기</th></tr></thead><tbody>
+ <tr><td><b>장비01</b></td><td>R상</td><td>단상 220V</td><td>20A 참고</td><td>콘센트 01</td><td>AK01</td></tr>
+ <tr><td><b>장비02</b></td><td>S상</td><td>단상 220V</td><td>20A 참고</td><td>콘센트 02</td><td>AK02</td></tr>
+ <tr><td><b>장비03</b></td><td>T상</td><td>단상 220V</td><td>20A 참고</td><td>콘센트 03</td><td>AK03</td></tr>
+ <tr><td><b>장비04</b></td><td>R상</td><td>단상 220V</td><td>20A 참고</td><td>콘센트 04</td><td>AK03</td></tr>
+ <tr><td colspan="6" class="small">… 이하 동일한 형식으로 구성</td></tr>
+ </tbody></table></div>
+</section>
+
+<section class="card">
+ <h2>5. 전기설비 협조사항</h2>
+ <h3>① 의료장비별 개별 회로</h3>
+ <p>장애 발생 시 다른 장비에 미치는 영향을 줄일 수 있도록 의료장비별 독립 회로 구성을 검토합니다. 장비 1대당 20A 차단기는 기본 참고조건이며, 실제 장비 정격 및 전기설계 결과에 따라 최종 확인합니다.</p>
+ <h3 class="red-emphasis">② 의료장소 접지 및 등전위본딩</h3>
+ <p>의료장소의 접지설비는 <span class="red-emphasis">현행 KEC 의료장소 관련 기준에 따라 검토</span>하여야 합니다. 특히 <span class="red-emphasis">등전위본딩 바 설치 및 보호도체 접속</span> 등 감전 보호에 필요한 사항을 전기설계 단계에서 확인합니다.</p>
+ <ul><li><span class="red-emphasis">등전위본딩 바 설치 여부 및 위치 확인</span></li><li><span class="red-emphasis">보호도체 및 콘센트 접지 상태 확인</span></li><li>의료장비 접지 연속성 및 필요한 전기적 시험 확인</li><li>현행 KEC 및 관련 기준 충족 여부 확인</li></ul>
+ <h3 class="red-emphasis">③ 일반전기 및 공조기 전원 분리</h3>
+ <p><span class="red-emphasis">의료장비 전원회로는 전기장판·선풍기 등 일반전기 부하와 가능한 한 분리</span>하여 구성합니다. 또한 <span class="red-emphasis">공조기 냉·난방 전원은 의료장비 전원과 별도 회로 및 적정 배전계통으로 분리</span>하는 방안을 검토합니다. 이는 대용량 부하 운전에 따른 전압변동 및 전원 품질 영향을 줄이기 위한 협조사항입니다.</p>
+ <h3>④ 전원 품질 및 보호설비</h3>
+ <ul><li>전압변동 및 전압강하</li><li>상간 부하 불균형</li><li>고조파 영향</li><li>대용량 부하 기동에 따른 순간 전압변동</li><li>과전류·누전·감전 보호 및 차단기 보호협조</li></ul>
+ <h3>⑤ 비상전원</h3>
+ <p>정전이 의료행위에 미치는 영향을 고려하여 비상전원 또는 예비전원 공급 필요 여부를 의료기관의 전원계획 및 의료장소 전기설계 기준에 따라 검토합니다. 적용 시 공급 대상, 전환시간 및 배전계통을 사전에 협의합니다.</p>
+ <h3>⑥ 회로 식별</h3>
+ <p>각 의료장비용 콘센트에 연결된 배전반 및 차단기 번호를 식별할 수 있도록 라벨을 표시합니다.</p>
+ <div class="assumption"><b>표시 예시</b> 장비01 → AK01 → MCCB/ELB No.01</div>
+</section>
+
+<section class="card">
+ <h2>6. 시공 전·후 확인사항</h2>
+ <div class="two-col">
+  <div><h3>시공 전</h3><ul>
+   <li>장비 수량·정격·전원 조건 확인</li>
+   <li>배전반 위치 및 장비별 회로 구성 검토</li>
+   <li>차단기·전선 규격 및 전압강하 검토</li>
+   <li>접지·등전위본딩 및 전원 분리 확인</li>
+   <li>비상전원 및 보호협조 검토</li>
+  </ul></div>
+  <div><h3>시공 완료 후</h3><ul>
+   <li>장비별 회로 및 차단기·콘센트 번호 확인</li>
+   <li>접지·보호도체·등전위본딩 상태 확인</li>
+   <li>공급전압 및 상별 부하 확인</li>
+   <li>필요한 전기적 시험 및 전원 품질 측정</li>
+   <li>최종 배선도·회로표·시험 결과 확보</li>
+  </ul></div>
+ </div>
+</section>
+  
+<div class="cooperation-btn-wrap no-print">
+    <button type="button" id="toggleCooperationBtn">
+        7. 협조 확인 작성
+    </button>
+</div>
+
+<section class="card cooperation-section" id="cooperationSection">
+  
+  <h2>7. 협조 확인</h2>
+ <p>상기 전기설비 협조사항을 확인하였으며, 실제 시공 전 현장조건 및 전기설계 기준을 검토하겠습니다.</p>
+ <div style="overflow-x:auto"><table class="vendor-table"><thead><tr><th class="chk-col" style="width:40px;"><input type="checkbox" id="selectAllVendors" onclick="toggleSelectAllVendors(this)"></th><th>구분</th><th>업체명</th><th>담당자</th><th>서명(수기)</th><th>일자</th></tr></thead><tbody id="vendorBody">
+ <tr><td class="chk-col"><input type="checkbox" class="vendor-chk"></td><td>업체 1</td><td><input class="vendor-input" type="text" placeholder="업체명"></td><td><input class="vendor-input" type="text" placeholder="담당자"></td><td><div class="signature-wrap"><canvas class="signature-canvas" width="380" height="108" aria-label="수기 서명 입력"></canvas><div class="signature-actions"><button type="button" class="btn-sign open-modal-sign">✍️ 서명하기</button><button type="button" class="btn-light clear-sign">지우기</button></div></div></td><td><input class="vendor-input" type="text" placeholder="YYYY-MM-DD"></td></tr>
+ </tbody></table></div>
+ <div class="vendor-actions-row">
+  <button type="button" class="add-row" onclick="addVendorRow()">＋ 업체 추가</button>
+  <button type="button" class="btn-danger" onclick="deleteSelectedVendors()">🗑 선택 업체 삭제</button>
+ </div>
+</section>
+
+
+<section class="card">
+ <h2>중요 안내</h2>
+ <p>본 협조문은 인공신장실 의료장비 설치를 위한 전기설비 협의 및 시공 참고자료입니다. <span class="red-emphasis">계산값과 구성 예시는 입력조건에 따른 참고값이며, 전기설비의 최종 설계·시공·검측은 현장 전기설계자 및 관련 전문업체가 현행 법령, KEC 및 관련 기술기준에 따라 검토·확정하여야 합니다</span>.</p>
+ <p>실제 장비 정격 또는 설치환경이 본 문서의 입력조건과 다른 경우 재계산 및 재검토가 필요합니다.</p>
+ <div class="assumption"><b>핵심 협의 항목</b><br>장비별 독립회로 · 의료장소 접지 및 등전위본딩 · 전원 품질 관리 · 회로 식별 · 시공 전·후 확인</div>
+</section>
+</div>
+
+<!-- 서명 전용 모달 팝업 -->
+<div class="modal-overlay" id="signModal">
+ <div class="modal-card">
+  <div class="modal-header">
+   <h3>✍️ 서명 입력</h3>
+   <button type="button" class="btn-light" onclick="closeModal('signModal')" style="padding:4px 8px;">✕</button>
+  </div>
+  <div class="modal-canvas-wrap">
+   <canvas class="modal-canvas" id="modalCanvas"></canvas>
+  </div>
+  <div class="modal-actions">
+   <button type="button" class="btn-light" id="clearModalCanvas">지우기</button>
+   <button type="button" class="btn-sign" id="applyModalSign">확인 (적용)</button>
+  </div>
+ </div>
+</div>
+
+<script>
+// 오늘 날짜를 YYYY-MM-DD 형식으로 가져와서 docDate 입력창의 기본값으로 세팅
+(function setTodayDate(){
+ const docDateInput = document.getElementById("docDate");
+ if(docDateInput){
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  docDateInput.value = `${yyyy}-${mm}-${dd}`;
+ }
+})();
+
+function calculate(){
+ const raw=document.getElementById("machineCount").value.trim();
+ const count=raw===""?0:Math.max(0,Math.floor(Number(raw)||0));
+ const base=Math.floor(count/3), rem=count%3;
+ const phases=[base+(rem>=1?1:0),base+(rem>=2?1:0),base];
+ const amps=phases.map(n=>n*11), total=count*11, kw=total*220/1000;
+ const max=Math.max(...amps), calc=max*1.25;
+ const standards=[20,30,40,50,60,75,100,125,150,175,200,225,250,300,350,400];
+ const breaker=count===0?0:(standards.find(v=>v>=calc)||Math.ceil(calc/50)*50);
+ const rows=[
+ ["전체 장비 수",`${count}대`,`${count}대`],
+ ["장비 1대 최대전류","기준값","11 A"],
+ ["전체 장비 전류 합계",`${count} × 11A`,`${total.toLocaleString()} A`],
+ ["전체 소비전력 참고값",`${count} × 11A × 220V`,`${kw.toFixed(2)} kW`],
+ ["R상 부하",`${phases[0]}대 × 11A`,`${amps[0]} A`],
+ ["S상 부하",`${phases[1]}대 × 11A`,`${amps[1]} A`],
+ ["T상 부하",`${phases[2]}대 × 11A`,`${amps[2]} A`],
+ ["최대 상전류","MAX(R상, S상, T상)",`${max} A`],
+ ["125% 적용 참고값",`${max}A × 1.25`,`${calc.toFixed(2)} A`]
+ ];
+ document.getElementById("resultBody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")+
+ `<tr><td class="highlight">차단기 참고 선정값</td><td class="highlight">계산값 이상 표준 정격</td><td class="highlight"><strong>${breaker} A</strong>참고값</td></tr>`;
+}
+
+function reindexVendors(){
+ const body=document.getElementById("vendorBody");
+ Array.from(body.rows).forEach((row, idx) => {
+  row.cells[1].textContent = `업체 ${idx + 1}`;
+ });
+ document.getElementById("selectAllVendors").checked = false;
+}
+
+function addVendorRow(){
+ const body=document.getElementById("vendorBody");
+ const row=body.insertRow();
+ row.innerHTML=`<td class="chk-col"><input type="checkbox" class="vendor-chk"></td>
+ <td>업체 ${body.rows.length}</td>
+ <td><input class="vendor-input" type="text" placeholder="업체명"></td>
+ <td><input class="vendor-input" type="text" placeholder="담당자"></td>
+ <td><div class="signature-wrap"><canvas class="signature-canvas" width="380" height="108" aria-label="수기 서명 입력"></canvas><div class="signature-actions"><button type="button" class="btn-sign open-modal-sign">✍️️ 서명하기</button><button type="button" class="btn-light clear-sign">지우기</button></div></div></td>
+ <td><input class="vendor-input" type="text" placeholder="YYYY-MM-DD"></td>`;
+ const newCanvas = row.querySelector(".signature-canvas");
+ setupSignature(newCanvas);
+ reindexVendors();
+}
+
+function toggleSelectAllVendors(master){
+ const chks = document.querySelectorAll(".vendor-chk");
+ chks.forEach(chk => chk.checked = master.checked);
+}
+
+function deleteSelectedVendors(){
+ const body = document.getElementById("vendorBody");
+ const chks = Array.from(document.querySelectorAll(".vendor-chk"));
+ const selectedRows = chks.filter(chk => chk.checked).map(chk => chk.closest("tr"));
+
+ if(selectedRows.length === 0){
+  alert("삭제할 업체를 선택해주세요.");
+  return;
+ }
+
+ if(confirm(`선택한 ${selectedRows.length}개 업체 정보를 삭제하시겠습니까?`)){
+  selectedRows.forEach(tr => tr.remove());
+  reindexVendors();
+ }
+}
+
+function setupSignature(canvas){
+ const ctx=canvas.getContext("2d");
+ ctx.lineWidth=3;ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#172b2d";
+ let drawing=false;
+ function point(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};}
+ canvas.addEventListener("pointerdown",e=>{drawing=true;canvas.setPointerCapture(e.pointerId);const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+ canvas.addEventListener("pointermove",e=>{if(!drawing)return;const p=point(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+ canvas.addEventListener("pointerup",()=>drawing=false);
+ canvas.addEventListener("pointercancel",()=>drawing=false);
+}
+
+document.querySelectorAll(".signature-canvas").forEach(setupSignature);
+calculate();
+
+// 모달 제어 공통 함수
+function closeModal(modalId){
+ document.getElementById(modalId).classList.remove("active");
+}
+
+// 서명 모달 제어
+const modalCanvas = document.getElementById("modalCanvas");
+const modalCtx = modalCanvas.getContext("2d");
+let targetCanvasForModal = null;
+let isModalDrawing = false;
+
+function initModalCanvasSize(){
+ const rect = modalCanvas.parentElement.getBoundingClientRect();
+ modalCanvas.width = rect.width;
+ modalCanvas.height = rect.height;
+ modalCtx.lineWidth = 3;
+ modalCtx.lineCap = "round";
+ modalCtx.lineJoin = "round";
+ modalCtx.strokeStyle = "#172b2d";
+}
+
+function pointModal(e){
+ const r = modalCanvas.getBoundingClientRect();
+ return { x: (e.clientX - r.left) * modalCanvas.width / r.width, y: (e.clientY - r.top) * modalCanvas.height / r.height };
+}
+
+modalCanvas.addEventListener("pointerdown", e => {
+ isModalDrawing = true;
+ modalCanvas.setPointerCapture(e.pointerId);
+ const p = pointModal(e);
+ modalCtx.beginPath();
+ modalCtx.moveTo(p.x, p.y);
+});
+modalCanvas.addEventListener("pointermove", e => {
+ if(!isModalDrawing) return;
+ const p = pointModal(e);
+ modalCtx.lineTo(p.x, p.y);
+ modalCtx.stroke();
+});
+modalCanvas.addEventListener("pointerup", () => isModalDrawing = false);
+modalCanvas.addEventListener("pointercancel", () => isModalDrawing = false);
+
+document.addEventListener("click", e => {
+ if(e.target.classList.contains("clear-sign")){
+  const canvas = e.target.closest(".signature-wrap").querySelector("canvas");
+  canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+ }
+ if(e.target.classList.contains("open-modal-sign")){
+  targetCanvasForModal = e.target.closest(".signature-wrap").querySelector("canvas");
+  document.getElementById("signModal").classList.add("active");
+  initModalCanvasSize();
+  modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+ }
+});
+
+document.getElementById("clearModalCanvas").addEventListener("click", () => modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height));
+
+document.getElementById("applyModalSign").addEventListener("click", () => {
+ if(targetCanvasForModal){
+  const tCtx = targetCanvasForModal.getContext("2d");
+  tCtx.clearRect(0, 0, targetCanvasForModal.width, targetCanvasForModal.height);
+  tCtx.drawImage(modalCanvas, 0, 0, targetCanvasForModal.width, targetCanvasForModal.height);
+ }
+ closeModal("signModal");
+});
+
+/* PDF 저장 시 제목 동적 설정 */
+function updateDocumentTitleForPrint(){
+ const siteName = document.getElementById("siteName").value.trim();
+ const docDate = document.getElementById("docDate").value.trim();
+
+ let titleParts = [];
+ if(siteName) titleParts.push(siteName);
+ if(docDate) titleParts.push(docDate);
+ titleParts.push("전기설비 협조문");
+
+ document.title = titleParts.join(" ");
+}
+
+function handlePrint(){
+ updateDocumentTitleForPrint();
+ window.print();
+}
+
+// Ctrl+P 또는 브라우저 인쇄 호출 전 제목 업데이트
+window.addEventListener("beforeprint", updateDocumentTitleForPrint);
+document.getElementById("toggleCooperationBtn").addEventListener("click", () => {
+
+    const section = document.getElementById("cooperationSection");
+    const btn = document.getElementById("toggleCooperationBtn");
+
+    if(section.style.display === "block"){
+
+        section.style.display = "none";
+        btn.textContent = "7. 협조 확인 작성";
+
+    }else{
+
+        section.style.display = "block";
+        btn.textContent = "협조 확인 숨기기";
+
+        section.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    }
+
+});
+</script>
+</body>
+</html>
